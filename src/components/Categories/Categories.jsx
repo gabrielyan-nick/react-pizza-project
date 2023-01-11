@@ -3,24 +3,14 @@ import React from "react";
 import { useState } from "react";
 import "../Categories/categories.scss";
 
-function Categories({ items }) {
- const [activeItem, setActiveItem] = useState(null);
-
- function onSelectItem(i) {
-    setActiveItem(i);
-  }
-
-  function onSelectAllItems(i) {
-    setActiveItem(null);
-  }
-
+function Categories({ items, onSelectCat, activeCat }) {
 
   return (
     <div className="categories">
       <ul>
         <li
-          className={`${activeItem === null ? "active" : ""}`}
-          onClick={onSelectAllItems}
+          className={`${activeCat === null ? "active" : ""}`}
+          onClick={() => onSelectCat(null)}
         >
           Все
         </li>
@@ -28,9 +18,9 @@ function Categories({ items }) {
           items.map((item, i) => {
             return (
               <li
-                className={`${activeItem === i ? "active" : ""}`}
+                className={`${activeCat === i ? "active" : ""}`}
                 key={i}
-                onClick={() => onSelectItem(i)}
+                onClick={() => onSelectCat(i)}
               >
                 {item}
               </li>

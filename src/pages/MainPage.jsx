@@ -1,38 +1,65 @@
-import { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import PropTypes from "prop-types";
 import { Categories, Sort, PizzaBlock } from "../components";
+import { setPizzas } from "../redux/actions/pizzas";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategory, setSortBy } from "../redux/actions/filters";
 
-function MainPage(props) {
+function MainPage() {
+  const categoriesArr = [
+    "Мясные",
+    "Вегетарианская",
+    "Гриль",
+    "Острые",
+    "Закрытые",
+  ];
+  const filtersArr = [
+    {
+      name: "популярности",
+      type: "popular",
+    },
+    {
+      name: "цене",
+      type: "price",
+    },
+    {
+      name: "алфавиту",
+      type: "alfabet",
+    },
+  ];
+
+  const dispatch = useDispatch();
+  const items = useSelector(({ pizzas }) => pizzas.items);
+  // const { category, sortBy } = useSelector(({ filters }) => filters);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/db.json")
+      .then((res) => dispatch(setPizzas(res.data.pizzas)))
+      .catch((e) => console.log(e));
+  }, []);
+
+  const onSelectCat = useCallback((i) => {
+    dispatch(setCategory(i));
+  }, []);
+
   return (
     <div className="content">
       <div className="container">
         <div className="content__top">
           <Categories
-            items={["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]}
+            items={categoriesArr}
+            onSelectCat={onSelectCat}
+            // activeCat={category}
           />
-          <Sort
-            items={[
-              {
-                name: "популярности",
-                type: "popular",
-              },
-              {
-                name: "цене",
-                type: "price",
-              },
-              {
-                name: "алфавиту",
-                type: "alfabet",
-              },
-            ]}
-          />
+          <Sort items={filtersArr} />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">
           <TransitionGroup component={null}>
-            {props.data &&
-              props.data.map((item, i) => {
+            {items &&
+              items.map((item, i) => {
                 return (
                   <CSSTransition
                     key={i}
@@ -59,9 +86,5 @@ function MainPage(props) {
     </div>
   );
 }
-
-MainPage.propTypes = {
-  data: PropTypes.array.isRequired,
-};
 
 export default MainPage;
