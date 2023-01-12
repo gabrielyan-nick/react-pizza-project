@@ -1,10 +1,12 @@
-// const fetchPizzas = (dispatch) => {
-//   axios
-//     .get("http://localhost:3000/db.json")
-//     // .then((res) => console.log(res.data.pizzas))
-//     .then((res) => dispatch(setPizzas(res.data.pizzas)))
-//     .catch((e) => console.log(e));
-// };
+import axios from "axios";
+
+const fetchPizzas = () => (dispatch) => {
+  axios
+    .get("http://localhost:3001/pizzas")
+    // .then((res) => console.log(res.data.pizzas))
+    .then((res) => dispatch(setPizzas(res.data)))
+    .catch((e) => console.log(e));
+};
 
 function setPizzas(items) {
   return {
@@ -13,5 +15,4 @@ function setPizzas(items) {
   };
 }
 
-
-export { setPizzas };
+export { setPizzas, fetchPizzas };

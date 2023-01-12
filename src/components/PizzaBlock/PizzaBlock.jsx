@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import "../PizzaBlock/pizzaBlock.scss";
@@ -9,6 +10,8 @@ function PizzaBlock({ imgUrl, name, types, sizes, price }) {
   const sizesArr = [26, 30, 40];
   const [size, setSize] = useState(sizes.length < 2 ? sizes[0] : null);
   const [type, setType] = useState(types.length < 2 ? types[0] : null);
+
+
 
   function onSelectSize(item) {
     setSize(item);
@@ -82,7 +85,7 @@ PizzaBlock.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   imgUrl: PropTypes.string.isRequired,
-  types: PropTypes.arrayOf(PropTypes.number).isRequired, 
+  types: PropTypes.arrayOf(PropTypes.number).isRequired,
   sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 

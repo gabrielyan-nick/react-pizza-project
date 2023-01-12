@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Header } from "../src/components/index";
 import { Routes, Route } from "react-router-dom";
 import { MainPage, CardPage } from "../src/pages/index";

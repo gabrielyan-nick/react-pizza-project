@@ -1,9 +1,9 @@
 import { func } from "prop-types";
 import React from "react";
-import { useState } from "react";
+import { useState, memo } from "react";
 import "../Categories/categories.scss";
 
-function Categories({ items, onSelectCat, activeCat }) {
+const Categories = memo(function Categories({ items, onSelectCat, activeCat }) {
 
   return (
     <div className="categories">
@@ -29,6 +29,6 @@ function Categories({ items, onSelectCat, activeCat }) {
       </ul>
     </div>
   );
-}
+});
 
 export default Categories;

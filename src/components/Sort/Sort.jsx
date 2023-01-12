@@ -1,13 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import { CSSTransition } from "react-transition-group";
 import "../Sort/sort.scss";
 
-function Sort(props) {
+const Sort = memo(function Sort({ items, onSelectSort, activeSortType }) {
   const [isOpen, setOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
-  const active = props.items[activeItem].name;
   const nodeRef = useRef(null);
   const sortRef = useRef(null);
+  const activeLabel = items.find((obj) => obj.type === activeSortType).name;
 
   useEffect(() => {
     document.body.addEventListener("click", handleClick);
@@ -15,13 +14,14 @@ function Sort(props) {
   }, []);
 
   function handleClick(e) {
-    if (!e.path.includes(sortRef.current)) {
+    const path = e.path || (e.composedPath && e.composedPath());
+    if (!path.includes(sortRef.current)) {
       setOpen(false);
     }
   }
 
-  function onSelectSortItem(i) {
-    setActiveItem(i);
+  function onSelectSortItem(item) {
+    onSelectSort(item);
     setOpen(false);
   }
 
@@ -49,7 +49,7 @@ function Sort(props) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>{active}</span>
+        <span>{activeLabel}</span>
       </div>
       <CSSTransition
         in={isOpen}
@@ -61,13 +61,13 @@ function Sort(props) {
       >
         <div ref={nodeRef} className="sort__popup">
           <ul>
-            {props.items &&
-              props.items.map((item, i) => {
+            {items &&
+              items.map((item, i) => {
                 return (
                   <li
                     key={i}
-                    className={`${i === activeItem ? "active" : ""}`}
-                    onClick={() => onSelectSortItem(i)}
+                    className={`${item.name === activeLabel ? "active" : ""}`}
+                    onClick={() => onSelectSortItem(item.type)}
                   >
                     {item.name}
                   </li>
@@ -78,6 +78,6 @@ function Sort(props) {
       </CSSTransition>
     </div>
   );
-}
+});
 
 export default Sort;
