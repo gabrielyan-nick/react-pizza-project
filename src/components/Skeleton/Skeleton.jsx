@@ -1,9 +1,10 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
+import '../Skeleton/skeleton.scss';
 
 const Skeleton = () => (
   <ContentLoader
-    style={{ margin: "0 35px 65px 0" }}
+  className="pizza-skeleton"
     speed={2}
     width={280}
     height={491}

@@ -1,0 +1,14 @@
+.pizza-skeleton-enter {
+  opacity: 0;
+}
+.pizza-skeleton-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.pizza-skeleton-exit {
+  opacity: 1;
+}
+.pizza-skeleton-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}

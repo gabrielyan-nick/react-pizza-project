@@ -6,7 +6,7 @@ const Sort = memo(function Sort({ items, onSelectSort, activeSortType }) {
   const [isOpen, setOpen] = useState(false);
   const nodeRef = useRef(null);
   const sortRef = useRef(null);
-  const activeLabel = items.find((obj) => obj.type === activeSortType).name;
+  const activeLabel = items.find((obj) => obj.type === activeSortType.type).name;
 
   useEffect(() => {
     document.body.addEventListener("click", handleClick);
@@ -67,7 +67,7 @@ const Sort = memo(function Sort({ items, onSelectSort, activeSortType }) {
                   <li
                     key={i}
                     className={`${item.name === activeLabel ? "active" : ""}`}
-                    onClick={() => onSelectSortItem(item.type)}
+                    onClick={() => onSelectSortItem(item)}
                   >
                     {item.name}
                   </li>

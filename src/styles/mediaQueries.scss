@@ -1,0 +1,14 @@
+@media (max-width: 1470px) {
+    .content__items {
+        justify-content: space-around;
+        grid-template-columns: repeat(3, 280px);
+    }
+}
+
+@media (max-width: 1120px) {
+    .content__items {
+        grid-template-columns: repeat(2, 280px);
+        justify-content: space-around;
+    }
+}
+

@@ -1,18 +1,30 @@
 import axios from "axios";
 
-const fetchPizzas = () => (dispatch) => {
+const fetchPizzas = (category, sortBy) => (dispatch) => {
+  dispatch(setLoaded(false));
   axios
-    .get("http://localhost:3001/pizzas")
-    // .then((res) => console.log(res.data.pizzas))
+    .get(
+      `http://localhost:3001/pizzas?${
+        category !== null ? `category=${category}` : ""
+      }&_sort=${sortBy.type}&_order=${sortBy.order}`
+    )
+
     .then((res) => dispatch(setPizzas(res.data)))
     .catch((e) => console.log(e));
 };
 
-function setPizzas(items) {
+const setLoaded = (payload) => {
+  return {
+    type: "SET_LOADED",
+    payload,
+  };
+};
+
+const setPizzas = (items) => {
   return {
     type: "SET_PIZZAS",
     payload: items,
   };
-}
+};
 
-export { setPizzas, fetchPizzas };
+export { setPizzas, fetchPizzas, setLoaded };

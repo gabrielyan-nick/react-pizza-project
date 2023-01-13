@@ -1,10 +1,11 @@
-@import './variables'; 
-@import '../styles/libs/normalize';
-@import '../styles/components/all';
-
+@import "./variables";
+@import "../styles/libs/normalize";
+@import "../styles/components/all";
 
 body {
   background-color: $background;
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
 }
 
 .wrapper {
@@ -24,9 +25,11 @@ body {
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     justify-content: space-between;
+    column-gap: 35px;
+    row-gap: 65px;
+    grid-template-columns: repeat(4, 280px);
   }
 
   &__top {
@@ -309,3 +312,5 @@ body {
     }
   }
 }
+
+@import "../styles/mediaQueries.scss";

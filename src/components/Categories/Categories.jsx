@@ -1,10 +1,9 @@
-import { func } from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
 import { useState, memo } from "react";
 import "../Categories/categories.scss";
 
 const Categories = memo(function Categories({ items, onSelectCat, activeCat }) {
-
   return (
     <div className="categories">
       <ul>
@@ -30,5 +29,13 @@ const Categories = memo(function Categories({ items, onSelectCat, activeCat }) {
     </div>
   );
 });
+
+Categories.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSelectCat: PropTypes.func.isRequired,
+  activeCat: PropTypes.number,
+};
+
+Categories.defaultProps = { activeCat: null, items: [] };
 
 export default Categories;

@@ -1,11 +1,13 @@
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Categories, Sort, PizzaBlock } from "../components";
 import { fetchPizzas } from "../redux/actions/pizzas";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory, setSortBy } from "../redux/actions/filters";
-import Skeleton from "../components/Skeleton";
+import { setLoaded } from "../redux/actions/pizzas";
+import Skeleton from "../components/Skeleton/Skeleton";
 
 const categoriesArr = [
   "Мясные",
@@ -17,15 +19,18 @@ const categoriesArr = [
 const filtersArr = [
   {
     name: "популярности",
-    type: "popular",
+    type: "rating",
+    order: "desc",
   },
   {
     name: "цене",
     type: "price",
+    order: "asc",
   },
   {
     name: "алфавиту",
-    type: "alfabet",
+    type: "name",
+    order: "asc",
   },
 ];
 
@@ -37,8 +42,8 @@ function MainPage() {
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
 
   useEffect(() => {
-    dispatch(fetchPizzas());
-  }, []);
+    dispatch(fetchPizzas(category, sortBy));
+  }, [category, sortBy]);
 
   const onSelectCat = useCallback((i) => {
     dispatch(setCategory(i));
@@ -70,15 +75,16 @@ function MainPage() {
               ? items.map((item, i) => {
                   return (
                     <CSSTransition
-                      key={i}
+                      key={uuid()}
                       classNames="pizza-block"
                       timeout={200}
                       mountOnEnter
                       unmountOnExit
                       exit={false}
+                    
                     >
                       <PizzaBlock
-                        key={i}
+                        key={uuid()}
                         imgUrl={item.imageUrl}
                         name={item.name}
                         types={item.types}
@@ -88,9 +94,20 @@ function MainPage() {
                     </CSSTransition>
                   );
                 })
-              : Array(10)
+              : Array(items.length)
                   .fill(0)
-                  .map((_, i) => <Skeleton key={i} />)}
+                  .map((_, i) => (
+                    <CSSTransition
+                      key={uuid()}
+                      classNames="pizza-block"
+                      timeout={200}
+                      mountOnEnter
+                      unmountOnExit
+                      exit={false}
+                    >
+                      <Skeleton key={uuid()} />
+                    </CSSTransition>
+                  ))}
           </TransitionGroup>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { memo } from "react";
 import { Button } from "../index";
 import { Link } from "react-router-dom";
 import "./header.scss";
@@ -20,7 +21,7 @@ function Header() {
         <div className="header__cart">
           <Link to={"/card"}>
             <Button className="button--cart">
-              <span>520 ₽</span>
+              <span>520 ₴</span>
               <div className="button__delimiter"></div>
               <svg
                 width="18"
