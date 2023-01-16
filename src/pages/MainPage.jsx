@@ -1,12 +1,12 @@
 import axios from "axios";
 import { v4 as uuid } from "uuid";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Categories, Sort, PizzaBlock } from "../components";
-import { fetchPizzas } from "../redux/actions/pizzas";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory, setSortBy } from "../redux/actions/filters";
-import { setLoaded } from "../redux/actions/pizzas";
+import { addPizzaCard } from "../redux/actions/card";
+import { fetchPizzas } from "../redux/actions/pizzas";
 import Skeleton from "../components/Skeleton/Skeleton";
 
 const categoriesArr = [
@@ -40,6 +40,7 @@ function MainPage() {
   const category = useSelector(({ filter }) => filter.category);
   const sortBy = useSelector(({ filter }) => filter.sortBy);
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
+  const cardItems = useSelector(({ card }) => card.items);
 
   useEffect(() => {
     dispatch(fetchPizzas(category, sortBy));
@@ -52,6 +53,10 @@ function MainPage() {
   const onSelectSort = useCallback((type) => {
     dispatch(setSortBy(type));
   }, []);
+
+  const handleAddPizza = (item) => {
+    dispatch(addPizzaCard(item));
+  };
 
   return (
     <div className="content">
@@ -81,15 +86,19 @@ function MainPage() {
                       mountOnEnter
                       unmountOnExit
                       exit={false}
-                    
                     >
                       <PizzaBlock
                         key={uuid()}
+                        id={item.id}
                         imgUrl={item.imageUrl}
                         name={item.name}
                         types={item.types}
                         sizes={item.sizes}
                         price={item.price}
+                        onAddPizza={handleAddPizza}
+                        addPizzaCount={
+                          cardItems[item.id] && cardItems[item.id].length
+                        }
                       />
                     </CSSTransition>
                   );

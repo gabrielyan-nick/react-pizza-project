@@ -1,5 +1,3 @@
-import axios from "axios";
-
 function setSortBy({ type, order }) {
   return {
     type: "SET_SORT_BY",
