@@ -90,8 +90,9 @@ function MainPage() {
                       <PizzaBlock
                         key={uuid()}
                         id={item.id}
-                        imgUrl={item.imageUrl}
                         name={item.name}
+                        imgUrl={item.imageUrl}
+                        
                         types={item.types}
                         sizes={item.sizes}
                         price={item.price}

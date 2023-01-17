@@ -14,16 +14,14 @@ const card = (state = initialState, action) => {
           : [...state.items[action.payload.id], action.payload],
       };
 
-      const allPizzas = [].concat.apply([], Object.values(newItem));
+      const allPizzas = Object.values(newItem).flat();
 
-      const price = allPizzas.reduce((res, item) => {
-        return res + item.price;
-      }, 0);
+      const price = allPizzas.reduce((res, item) => res + item.price, 0);
 
       return {
         ...state,
         items: newItem,
-        totalCount: [].concat.apply([], Object.values(newItem)).length,
+        totalCount: allPizzas.length,
         totalPrice: price,
       };
     default:
