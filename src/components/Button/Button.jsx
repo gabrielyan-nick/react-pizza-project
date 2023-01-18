@@ -1,10 +1,9 @@
 import { memo } from "react";
 
-const Button = (props) => {
-  const { outline, children, className, onAddPizza } = props;
+const Button = ({ outline, children, className, onAction }) => {
   return (
     <button
-      onClick={onAddPizza}
+      onClick={onAction}
       className={`button ${className} ${outline ? "button--outline" : ""}`}
     >
       {children}

@@ -1,13 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import Button from "../Button/Button";
 
-function CardItem({ name, type, size, pizzaCount, pizzasPrice, onAddPizza }) {
-  const items = useSelector(({ pizzas }) => pizzas.items);
-
-  const pizzaObj = items.find((item) => item.name === name);
+function CardItem({
+  name,
+  type,
+  size,
+  pizzaCount,
+  pizzasPrice,
+  onDelItem,
+  onPlusItem,
+  objName,
+}) {
+  const onDelCardItem = () => {
+    onDelItem(objName);
+  };
 
   const onClickAddPizza = () => {
-    onAddPizza(pizzaObj);
+    onPlusItem(objName);
   };
 
   return (
@@ -45,9 +55,10 @@ function CardItem({ name, type, size, pizzaCount, pizzasPrice, onAddPizza }) {
           </svg>
         </div>
         <b>{pizzaCount}</b>
-        <div
-          className="button button--outline button--circle cart__item-count-plus"
-          onClick={onClickAddPizza}
+        <Button
+          className="button--circle cart__item-count-plus"
+          onAction={onClickAddPizza}
+          outline
         >
           <svg
             width="10"
@@ -65,13 +76,16 @@ function CardItem({ name, type, size, pizzaCount, pizzasPrice, onAddPizza }) {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </Button>
       </div>
       <div className="cart__item-price">
         <b>{pizzasPrice} ₴</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
+        <Button
+          className="button--outline button--circle"
+          onAction={onDelCardItem}
+        >
           <svg
             width="10"
             height="10"
@@ -88,7 +102,7 @@ function CardItem({ name, type, size, pizzaCount, pizzasPrice, onAddPizza }) {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </Button>
       </div>
     </div>
   );

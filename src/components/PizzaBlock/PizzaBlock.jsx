@@ -8,11 +8,27 @@ import { addPizzaCard } from "../../redux/actions/card";
 import "../PizzaBlock/pizzaBlock.scss";
 
 const PizzaBlock = memo(
-  ({ id, imgUrl, name, types, sizes, price, onAddPizza, addPizzaCount }) => {
+  ({ id, imgUrl, name, types, sizes, price, onAddPizza }) => {
     const typesArr = ["тонкое", "традиционное"];
     const sizesArr = [26, 30, 40];
     const [activeSize, setSize] = useState(sizes[0]);
     const [activeType, setType] = useState(types[0]);
+    const [totalPrice, setTotalPrice] = useState(price);
+    const cardItems = useSelector(({ card }) => card.items);
+    const objName = `${id}-${activeType === 0 ? "th" : "cl"}-${activeSize}`;
+    const addPizzaCount = cardItems[objName] && cardItems[objName].length;
+
+    useEffect(() => {
+      setTotalPrice(
+        activeSize === 26
+          ? price
+          : activeSize === 30
+          ? price * 1.2
+          : activeSize === 40
+          ? price * 1.5
+          : price
+      );
+    }, [activeSize]);
 
     const onSelectSize = (item) => {
       setSize(item);
@@ -27,7 +43,7 @@ const PizzaBlock = memo(
         id,
         name,
         imgUrl,
-        price,
+        totalPrice,
         size: activeSize,
         type: typesArr[activeType],
       };
@@ -76,8 +92,8 @@ const PizzaBlock = memo(
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₴</div>
-          <Button className="button--add" onAddPizza={onClickAddPizza} outline>
+          <div className="pizza-block__price">{totalPrice} ₴</div>
+          <Button className="button--add" onAction={onClickAddPizza} outline>
             <svg
               width="12"
               height="12"

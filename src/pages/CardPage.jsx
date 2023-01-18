@@ -1,7 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CardItem from "../components/CardItem/CardItem";
+import Button from "../components/Button/Button";
 import { useSelector, useDispatch } from "react-redux";
-import { addPizzaCard } from "../redux/actions/card";
+import {
+  addPizzaCard,
+  clearCard,
+  delPizzaCard,
+  plusPizzaCard,
+  minusPizzaCard,
+} from "../redux/actions/card";
+import EmptyCard from "../components/EmptyCard/EmptyCard";
 
 function CardPage() {
   const { items, totalPrice, totalCount } = useSelector(({ card }) => card);
@@ -11,7 +20,27 @@ function CardPage() {
     dispatch(addPizzaCard(item));
   };
 
-  return (
+  const onClearCard = () => {
+    if (totalCount > 0) {
+      if (window.confirm("Вы действительно хотите очистить корзину?")) {
+        dispatch(clearCard());
+      }
+    }
+  };
+
+  const onDelItem = (item) => {
+    if (window.confirm("Вы действительно хотите удалить пиццу?")) {
+      dispatch(delPizzaCard(item));
+    }
+  };
+
+  const onPlusItem = (item) => {
+    dispatch(plusPizzaCard(item));
+  };
+
+  return totalCount === 0 ? (
+    <EmptyCard />
+  ) : (
     <div className="content">
       <div className="container container--cart">
         <div className="cart">
@@ -48,7 +77,7 @@ function CardPage() {
               </svg>
               Корзина
             </h2>
-            <div className="cart__clear">
+            <button onClick={onClearCard} className="cart__clear">
               <svg
                 width="20"
                 height="20"
@@ -87,11 +116,15 @@ function CardPage() {
               </svg>
 
               <span>Очистить корзину</span>
-            </div>
+            </button>
           </div>
           <div className="card__items">
             {items &&
               Object.values(items).map((item, i) => {
+                const objName = `${item[0].id}-${
+                  item[0].type === "тонкое" ? "th" : "cl"
+                }-${item[0].size}`;
+
                 return (
                   <CardItem
                     key={i}
@@ -100,9 +133,11 @@ function CardPage() {
                     type={item[0].type}
                     pizzaCount={item.length}
                     pizzasPrice={item.reduce((res, item) => {
-                      return res + item.price;
+                      return res + item.totalPrice;
                     }, 0)}
-                    onAddPizza={onAddPizza}
+                    onPlusItem={onPlusItem}
+                    onDelItem={onDelItem}
+                    objName={objName}
                   />
                 );
               })}
@@ -117,8 +152,8 @@ function CardPage() {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <a
-                href="/"
+              <Link
+                to={"/"}
                 className="button button--outline button--add go-back-btn"
               >
                 <svg
@@ -138,7 +173,7 @@ function CardPage() {
                 </svg>
 
                 <span>Вернуться назад</span>
-              </a>
+              </Link>
               <div className="button pay-btn">
                 <span>Оплатить сейчас</span>
               </div>

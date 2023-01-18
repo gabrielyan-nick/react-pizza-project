@@ -40,7 +40,6 @@ function MainPage() {
   const category = useSelector(({ filter }) => filter.category);
   const sortBy = useSelector(({ filter }) => filter.sortBy);
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
-  const cardItems = useSelector(({ card }) => card.items);
 
   useEffect(() => {
     dispatch(fetchPizzas(category, sortBy));
@@ -92,14 +91,13 @@ function MainPage() {
                         id={item.id}
                         name={item.name}
                         imgUrl={item.imageUrl}
-                        
                         types={item.types}
                         sizes={item.sizes}
                         price={item.price}
                         onAddPizza={handleAddPizza}
-                        addPizzaCount={
-                          cardItems[item.id] && cardItems[item.id].length
-                        }
+                        // addPizzaCount={
+                        //   cardItems[item.id] && cardItems[item.id].length
+                        // }
                       />
                     </CSSTransition>
                   );

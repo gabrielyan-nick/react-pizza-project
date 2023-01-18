@@ -80,6 +80,7 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
+    background-color: transparent;
     @include noselect();
 
     span {
