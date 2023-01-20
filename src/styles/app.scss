@@ -342,7 +342,6 @@ button {
     transition: all $duration ease-in-out;
   }
 
-
   &:hover {
     background-color: darken($orange, 8%);
   }
@@ -465,5 +464,16 @@ button {
     }
   }
 }
+
+// .pizza-block-btn {
+//   width: 129px;
+//   display: flex;
+//   align-items: baseline;
+//   transition: width 0.3s;
+// }
+
+// .pizza-block-btn-wide {
+//   width: 151px;
+// }
 
 @import "../styles/mediaQueries.scss";

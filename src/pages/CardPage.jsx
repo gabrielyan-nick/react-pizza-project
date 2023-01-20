@@ -4,7 +4,6 @@ import CardItem from "../components/CardItem/CardItem";
 import Button from "../components/Button/Button";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  addPizzaCard,
   clearCard,
   delPizzaCard,
   plusPizzaCard,
@@ -15,10 +14,6 @@ import EmptyCard from "../components/EmptyCard/EmptyCard";
 function CardPage() {
   const { items, totalPrice, totalCount } = useSelector(({ card }) => card);
   const dispatch = useDispatch();
-
-  const onAddPizza = (item) => {
-    dispatch(addPizzaCard(item));
-  };
 
   const onClearCard = () => {
     if (totalCount > 0) {
@@ -38,6 +33,11 @@ function CardPage() {
     dispatch(plusPizzaCard(item));
   };
 
+  const onMinusItem = (item) => {
+    dispatch(minusPizzaCard(item));
+  };
+
+  const onClickBuy = () => console.log("Ваш заказ", items);
   return totalCount === 0 ? (
     <EmptyCard />
   ) : (
@@ -121,21 +121,21 @@ function CardPage() {
           <div className="card__items">
             {items &&
               Object.values(items).map((item, i) => {
-                const objName = `${item[0].id}-${
-                  item[0].type === "тонкое" ? "th" : "cl"
-                }-${item[0].size}`;
+                const objName = `${item.cardItems[0].id}-${
+                  item.cardItems[0].type === "тонкое" ? "th" : "cl"
+                }-${item.cardItems[0].size}`;
 
                 return (
                   <CardItem
                     key={i}
-                    name={item[0].name}
-                    size={item[0].size}
-                    type={item[0].type}
-                    pizzaCount={item.length}
-                    pizzasPrice={item.reduce((res, item) => {
-                      return res + item.totalPrice;
-                    }, 0)}
+                    name={item.cardItems[0].name}
+                    imgUrl={item.cardItems[0].imgUrl}
+                    size={item.cardItems[0].size}
+                    type={item.cardItems[0].type}
+                    pizzaCount={item.cardItems.length}
+                    pizzasPrice={item.cardPrice}
                     onPlusItem={onPlusItem}
+                    onMinusItem={onMinusItem}
                     onDelItem={onDelItem}
                     objName={objName}
                   />
@@ -174,9 +174,9 @@ function CardPage() {
 
                 <span>Вернуться назад</span>
               </Link>
-              <div className="button pay-btn">
+              <Button onAction={onClickBuy} className="pay-btn">
                 <span>Оплатить сейчас</span>
-              </div>
+              </Button>
             </div>
           </div>
         </div>

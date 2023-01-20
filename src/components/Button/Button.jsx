@@ -1,6 +1,11 @@
 import { memo } from "react";
 
-const Button = ({ outline, children, className, onAction }) => {
+const Button = memo(function Button({
+  outline,
+  children,
+  className,
+  onAction,
+}) {
   return (
     <button
       onClick={onAction}
@@ -9,6 +14,6 @@ const Button = ({ outline, children, className, onAction }) => {
       {children}
     </button>
   );
-};
+});
 
 export default Button;

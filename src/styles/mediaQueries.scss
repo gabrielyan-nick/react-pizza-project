@@ -1,14 +1,139 @@
 @media (max-width: 1470px) {
-    .content__items {
-        justify-content: space-around;
-        grid-template-columns: repeat(3, 280px);
-    }
+  .content__items {
+    justify-content: space-around;
+    grid-template-columns: repeat(3, 280px);
+  }
+}
+
+@media (max-width: 1284px) {
+  .content__top {
+    flex-wrap: wrap;
+  }
+  .sort {
+    margin: 30px 0 0 auto;
+  }
 }
 
 @media (max-width: 1120px) {
-    .content__items {
-        grid-template-columns: repeat(2, 280px);
-        justify-content: space-around;
-    }
+  .content__items {
+    grid-template-columns: repeat(2, 280px);
+    justify-content: space-around;
+  }
 }
 
+@media (max-width: 1000px) {
+  .categories {
+    overflow: scroll;
+  }
+  .cart__item-img {
+    width: auto;
+  }
+  .cart__item-count {
+    width: auto;
+    gap: 7px;
+  }
+}
+
+@media (max-width: 760px) {
+  .pizza-block {
+    width: 250px;
+  }
+  .content__items {
+    column-gap: 15px;
+    grid-template-columns: repeat(2, 250px);
+  }
+}
+
+@media (max-width: 675px) {
+  .wrapper {
+    width: calc(100vw - 30px);
+  }
+  .pizza-block {
+    width: 250px;
+  }
+  .content__items {
+    grid-template-columns: repeat(2, 250px);
+    justify-items: space-between;
+  }
+  .header .container {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .header__cart {
+    margin: 20px auto 0;
+  }
+  .cart--empty {
+    width: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .pizza-block {
+    width: 300px;
+  }
+  .content__items {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .cart__item {
+    flex-wrap: wrap;
+  }
+  .cart__item-remove {
+    width: 20%;
+    margin-left: auto;
+  }
+  .cart__item-count {
+    order: 1;
+    gap: 15px;
+    width: 30%;
+    margin: 20px 0 0 auto;
+  }
+  .cart__item-price {
+    order: 1;
+    width: 50%;
+    margin: 20px 0 0 auto;
+  }
+  .cart__item-info {
+    width: 50%;
+  }
+}
+
+@media (max-width: 530px) {
+  .cart__bottom-buttons .go-back-btn,
+  .cart__bottom-buttons .pay-btn {
+    width: 160px;
+  }
+  .cart__bottom-details {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .cart__top {
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  .cart__clear {
+    margin-left: auto;
+  }
+  .container--cart {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .pizza-block {
+    width: 250px;
+  }
+  .cart__bottom-buttons .go-back-btn,
+  .cart__bottom-buttons .pay-btn {
+    width: 140px;
+  }
+  .cart__bottom-buttons .pay-btn {
+    padding: 5px;
+  }
+  .cart__item-remove {
+    width: 12%;
+  }
+  .cart--empty img {
+    width: 260px;
+  }
+}

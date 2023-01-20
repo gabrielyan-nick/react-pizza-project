@@ -1,23 +1,28 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Button from "../Button/Button";
 
 function CardItem({
   name,
+  imgUrl,
   type,
   size,
   pizzaCount,
   pizzasPrice,
   onDelItem,
   onPlusItem,
+  onMinusItem,
   objName,
 }) {
   const onDelCardItem = () => {
     onDelItem(objName);
   };
 
-  const onClickAddPizza = () => {
+  const onClickPlusPizza = () => {
     onPlusItem(objName);
+  };
+
+  const onClickMinusPizza = () => {
+    onMinusItem(objName);
   };
 
   return (
@@ -25,7 +30,7 @@ function CardItem({
       <div className="cart__item-img">
         <img
           className="pizza-block__image"
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+          src={imgUrl}
           alt="Pizza"
         />
       </div>
@@ -36,7 +41,9 @@ function CardItem({
         </p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <Button className="button--circle cart__item-count-minus"
+        onAction={onClickMinusPizza}
+        outline>
           <svg
             width="10"
             height="10"
@@ -53,11 +60,11 @@ function CardItem({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </Button>
         <b>{pizzaCount}</b>
         <Button
           className="button--circle cart__item-count-plus"
-          onAction={onClickAddPizza}
+          onAction={onClickPlusPizza}
           outline
         >
           <svg
