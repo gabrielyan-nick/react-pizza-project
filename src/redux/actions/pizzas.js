@@ -4,7 +4,7 @@ const fetchPizzas = (category, sortBy) => (dispatch) => {
   dispatch(setLoaded(false));
   axios
     .get(
-      `http://localhost:3001/pizzas?${
+      `https://json-server-abjv.onrender.com/pizzas?${
         category !== null ? `category=${category}` : ""
       }&_sort=${sortBy.type}&_order=${sortBy.order}`
     )
